@@ -2,7 +2,7 @@ export default {
   async fetch(request, env) {
     const VERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
     const ALLOW_ORIGIN = [
-      "https://metro.littleliu016.dpdns.org" // 👉 改成你cdmetro前端完整域名！
+      "https://metro.littleliu016.dpdns.org/" // 👉 改成你cdmetro前端完整域名！
     ];
 
     const corsHeaders = {
