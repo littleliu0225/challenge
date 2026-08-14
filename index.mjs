@@ -2,13 +2,26 @@ export default {
   async fetch(request, env) {
     const VERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
     const ALLOW_ORIGIN = [
-      "https://metro.littleliu016.dpdns.org",
+      "https://metro.littleliu016.dpdns.org" // 👉 改成你cdmetro前端完整域名！
     ];
 
     const corsHeaders = {
       "Access-Control-Allow-Methods": "POST, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type"
     };
+
+    const url = new URL(request.url);
+    // 调试用：访问根路径打印pathname
+    if(url.pathname === "/"){
+      return Response.json({
+        debug_pathname: url.pathname,
+        target: "/api/verify"
+      })
+    }
+
+    if (url.pathname !== "/api/verify") {
+      return new Response("Not Found", { status: 404 });
+    }
 
     if (request.method === "OPTIONS") {
       const origin = request.headers.get("origin") || "";
@@ -18,9 +31,8 @@ export default {
       return new Response(null, { headers: corsHeaders });
     }
 
-    const url = new URL(request.url);
-    if (url.pathname !== "/api/verify" || request.method !== "POST") {
-      return new Response("Not Found", { status: 404 });
+    if(request.method !== "POST"){
+      return Response.json({success:false,msg:"仅支持POST"},{status:405})
     }
 
     let body;
