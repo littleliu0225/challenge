@@ -1,0 +1,4 @@
+name = "cdmetro-verify"
+main = "index.mjs"
+compatibility_date = "2026-08-14"
+# 严禁写 assets / site 字段！写了又会触发静态目录检测
